@@ -1,32 +1,37 @@
 # Desafio da semana #2
 
-Nesse exercício, você está livre para escolher os nomes para suas variáveis e funções! :smile:
+//Nesse exercício, você está livre para escolher os nomes para suas variáveis e funções! :smile:
 
-```js
-// Crie uma função que receba dois argumentos e retorne a soma dos mesmos.
-?
+//js
+```// Crie uma função que receba dois argumentos e retorne a soma dos mesmos.
+function soma(x,y){
+    return x + y;
+}
 
 // Declare uma variável que receba a invocação da função criada acima, passando dois números quaisquer por argumento, e somando `5` ao resultado retornado da função.
-?
+var valor = soma(2,5) + 5;
 
 // Qual o valor atualizado dessa variável?
-?
+12
 
 // Declare uma nova variável, sem valor.
-?
+var semValor;
 
 /*
 Crie uma função que adicione um valor à variável criada acima, e retorne a string:
     O valor da variável agora é VALOR.
 Onde VALOR é o novo valor da variável.
 */
-?
+function adicionaValor (){
+    semValor = "VALOR";
+    return "O valor da variável agora é " + semValor;
+}
 
 // Invoque a função criada acima.
-?
+adicionaValor();
 
 // Qual o retorno da função? (Use comentários de bloco).
-?
+/*O valor da variável agora é VALOR*/
 
 /*
 Crie uma função com as seguintes características:
@@ -35,19 +40,24 @@ Crie uma função com as seguintes características:
     Preencha todos os valores corretamente!
 3. O retorno da função deve ser a multiplicação dos 3 argumentos, somando `2` ao resultado da multiplicação.
 */
-?
+function multiplicacaoDeTres(x,y,z){
+    if(x == undefined || y == undefined || z == undefined ){
+       return "Preencha todos os valores corretamente!";
+    }
+    return x * y * z;
+}
 
 // Invoque a função criada acima, passando só dois números como argumento.
-?
+multiplicacaoDeTres(1,2);
 
 // Qual o resultado da invocação acima? (Use comentários para mostrar o valor retornado).
-?
+//Preencha todos os valores corretamente!
 
 // Agora invoque novamente a função criada acima, mas passando todos os três argumentos necessários.
-?
+multiplicacaoDeTres(1,2,3);
 
 // Qual o resultado da invocação acima? (Use comentários para mostrar o valor retornado).
-?
+//6
 
 /*
 Crie uma função com as seguintes características:
@@ -58,8 +68,61 @@ Crie uma função com as seguintes características:
 5. Se nenhum argumento for passado, retorne o valor booleano `false`.
 6. E ainda, se nenhuma das condições acima forem atendidas, retorne `null`.
 */
-?
+function argumentos(a,b,c){
+    if((a != undefined && b == undefined && c == undefined) || (a == undefined && b != undefined && c == undefined) || (a == undefined && b == undefined && c != undefined)){
+        if (a != undefined && b == undefined && c == undefined) {
+            return a;
+        }
+        if(a == undefined && b != undefined && c == undefined) {
+            return b
+        }
+        if(a == undefined && b == undefined && c != undefined){
+            return c;
+        }
+    }else if((a != undefined && b != undefined && c == undefined) || (a == undefined && b != undefined && c != undefined) || (a != undefined && b == undefined && c != undefined)){
+        var argumento1;
+        var argumento2;
+        if((a != undefined && b != undefined && c == undefined)){
+            argumento1 = a;
+            argumento2 = b;
+        }
+        if((a == undefined && b != undefined && c != undefined)){
+            argumento1 = b;
+            argumento2 = c;
+        }
+        if((a != undefined && b == undefined && c != undefined)){
+            argumento1 = a;
+            argumento2 = c;
+        }
+        return argumento1 + argumento2;
+    }else if (a != undefined && b != undefined && c != undefined){
+        return (a + b) / c;
+    }else if (a == undefined && b == undefined && c == undefined){
+        return false;
+    }else{
+        return null;
+    }
+}
 
-// Invoque a função acima utilizando todas as possibilidades (com nenhum argumento, com um, com dois e com três.) Coloque um comentário de linha ao lado da função com o resultado de cada invocação.
-?
+function argumentos(a,b,c){
+    if((a != undefined && b == undefined )){        
+        return a;
+    }else if(a != undefined && b != undefined && c == undefined){  
+        return a + b;
+    }else if (a != undefined && b != undefined && c != undefined){
+        return (a + b) / c;
+    }else if (a == undefined && b == undefined && c == undefined){
+        return false;
+    }else{
+        return null;
+    }
+}
+
+
+
+// Invoque a função acima utilizando todas as possibilidades (com nenhum argumento, com um, com dois e com três.) Coloque um comentário de linha ao lado da função com o resultado de cada invocação
+argumentos();//false
+argumentos(1);//1
+argumentos(1,2);//2
+argumentos(1,2,3);//1
 ```
