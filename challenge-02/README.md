@@ -41,10 +41,10 @@ Crie uma função com as seguintes características:
 3. O retorno da função deve ser a multiplicação dos 3 argumentos, somando `2` ao resultado da multiplicação.
 */
 function multiplicacaoDeTres(x,y,z){
-    if(x == undefined || y == undefined || z == undefined ){
+    if(x === undefined || y === undefined || z === undefined ){
        return "Preencha todos os valores corretamente!";
     }
-    return x * y * z;
+    return (x * y * z) + 2;
 }
 
 // Invoque a função criada acima, passando só dois números como argumento.
@@ -57,7 +57,7 @@ multiplicacaoDeTres(1,2);
 multiplicacaoDeTres(1,2,3);
 
 // Qual o resultado da invocação acima? (Use comentários para mostrar o valor retornado).
-//6
+//8
 
 /*
 Crie uma função com as seguintes características:
@@ -69,35 +69,35 @@ Crie uma função com as seguintes características:
 6. E ainda, se nenhuma das condições acima forem atendidas, retorne `null`.
 */
 function argumentos(a,b,c){
-    if((a != undefined && b == undefined && c == undefined) || (a == undefined && b != undefined && c == undefined) || (a == undefined && b == undefined && c != undefined)){
-        if (a != undefined && b == undefined && c == undefined) {
+    if((a !== undefined && b === undefined && c === undefined) || (a === undefined && b !== undefined && c === undefined) || (a === undefined && b === undefined && c !== undefined)){
+        if (a !== undefined && b === undefined && c === undefined) {
             return a;
         }
-        if(a == undefined && b != undefined && c == undefined) {
+        if(a === undefined && b !== undefined && c === undefined) {
             return b
         }
-        if(a == undefined && b == undefined && c != undefined){
+        if(a === undefined && b === undefined && c !== undefined){
             return c;
         }
-    }else if((a != undefined && b != undefined && c == undefined) || (a == undefined && b != undefined && c != undefined) || (a != undefined && b == undefined && c != undefined)){
+    }else if((a !== undefined && b !== undefined && c === undefined) || (a === undefined && b !== undefined && c !== undefined) || (a !== undefined && b === undefined && c !== undefined)){
         var argumento1;
         var argumento2;
-        if((a != undefined && b != undefined && c == undefined)){
+        if((a !== undefined && b !== undefined && c === undefined)){
             argumento1 = a;
             argumento2 = b;
         }
-        if((a == undefined && b != undefined && c != undefined)){
+        if((a === undefined && b !== undefined && c !== undefined)){
             argumento1 = b;
             argumento2 = c;
         }
-        if((a != undefined && b == undefined && c != undefined)){
+        if((a !== undefined && b === undefined && c !== undefined)){
             argumento1 = a;
             argumento2 = c;
         }
         return argumento1 + argumento2;
-    }else if (a != undefined && b != undefined && c != undefined){
+    }else if (a !== undefined && b !== undefined && c !== undefined){
         return (a + b) / c;
-    }else if (a == undefined && b == undefined && c == undefined){
+    }else if (a === undefined && b === undefined && c === undefined){
         return false;
     }else{
         return null;
@@ -105,13 +105,13 @@ function argumentos(a,b,c){
 }
 
 function argumentos(a,b,c){
-    if((a != undefined && b == undefined )){        
+    if((a !== undefined && b === undefined && c === undefined )){        
         return a;
-    }else if(a != undefined && b != undefined && c == undefined){  
+    }else if(a !== undefined && b !== undefined && c === undefined){  
         return a + b;
-    }else if (a != undefined && b != undefined && c != undefined){
+    }else if (a !== undefined && b !== undefined && c !== undefined){
         return (a + b) / c;
-    }else if (a == undefined && b == undefined && c == undefined){
+    }else if (a === undefined && b === undefined && c === undefined){
         return false;
     }else{
         return null;
