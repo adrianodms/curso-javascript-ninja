@@ -14,7 +14,7 @@ function retornaArray (arr){
 /*
 Imprima o segundo índice do array retornado pela função criada acima.
 */
-console.log(retornaArray(arr));
+console.log(retornaArray(arr)[1]);
 
 /*
 Crie uma função que receba dois parâmetros: o primeiro, um array de valores; e o
@@ -29,7 +29,7 @@ function twoParam(arr, num){
 /*
 Declare uma variável que recebe um array com 5 valores, de tipos diferentes.
 */
-var teste = [44,45,46,47,48];
+var teste = [44,'45',46.3,true,{b:2}];
 
 /*
 Invoque a função criada acima, fazendo-a retornar todos os valores do último
