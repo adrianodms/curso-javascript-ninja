@@ -106,7 +106,7 @@
     Crie um array chamado `myName`. Cada item desse array deve ser uma letra do
     seu nome. Adicione seu nome completo no array.
     */
-    var myName = ['Adriano', 'Dutra', 'Magalhães'];
+    var myName = ['A','d','r','i','a','n','o', 'D','u','t','r','a', 'M','a','g','a','l','h','ã','e','s'];
     console.log('\nMeu nome é:');
     
     /*
