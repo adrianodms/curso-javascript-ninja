@@ -11,10 +11,10 @@
   das variáveis. Analise o que está sendo impresso no console para saber como
   resolver o problema corretamente.
   */
-  var five = 5;
+  var five = Number('5');
   console.log(five + ' é número?', typeof five === 'number');
 
-  var concat = '10' + '10';
+  var concat = '10' + String('10');
   console.log('"' + concat + '" é uma string? E é igual a "1010"?',
     typeof concat === 'string');
 
@@ -29,19 +29,19 @@
   */
   var operation = {
     '+': function (a, b) {
-      return a + b
+      return a + b;
     },
     '-': function (a, b) {
-      return a - b
+      return a - b;
     },
     '*': function (a, b) {
-      return a * b
+      return a * b;
     },
     '/': function (a, b) {
-      return a / b
+      return a / b;
     },
     '%': function (a, b) {
-      return a % b
+      return a % b;
     }
   }
 
@@ -56,13 +56,7 @@
   - O desafio é fazer o retorno sem usar "if" ou "switch".
   */
   function isOperatorValid(operator) {
-    return operator === '+' || operator === '-' || operator === '*' ||
-      operator === '/' || operator === '%';
-  }
-
-  function isOperatorValid(operator) {
-    var operators = ['+', '-', '*', '/', '%'];
-    return operators.includes(operator);
+    return !!operation[operator];
   }
 
   /*
@@ -128,6 +122,8 @@
   */
   operationSignal = '+';
   var sum = calculator(operationSignal);
+  number1 = 3;
+  number2 = 4;
 
   /*
   PASSO 3:
@@ -143,13 +139,12 @@
   */
 
   function executeOperation(operationSignal, number1, number2, operationFunc) {
-    if (operationFunc) {
-      number1 = 3;
-      number2 = 4;
+    if (operationFunc) {   
       console.log(
         showOperationMessage(operationSignal, number1, number2),
         operationFunc(number1, number2));
-    } else {
+    }
+    else {
       console.log(showErrorMessage(operationSignal));
     }
   }
