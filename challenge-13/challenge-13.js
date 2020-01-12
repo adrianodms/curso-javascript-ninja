@@ -180,7 +180,7 @@
             id: estado.id + 1,
             estado: estado.estado + " pertence ao Brasil."
         }
-    })
+    });
 
     /*
     Mostre no console o array criado acima:
