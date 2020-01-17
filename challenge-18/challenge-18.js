@@ -42,7 +42,7 @@
     console.log('\nFormatando CPFs corretamente:');
     function formatCPF(cpf) {
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, function (a, b, c, d, e) {
-            return b +'.'+  c + '.' + d + '-' + e;
+            return b + '.' + c + '.' + d + '-' + e;
         });
     }
     console.log(formatCPF(cpf1));
@@ -62,7 +62,11 @@
     ["junho", "julho"]
     */
     console.log('\nMatch com as palavras "junho" ou "julho" para a frase "Os meses de janeiro, junho e julho começam com a letra j.":');
-    // ?
+    var regex = /ju[ln]ho/g;
+    var regex2 = /j\w{3}o/g;
+    var frase = 'Os meses de janeiro, junho e julho começam com a letra j.'
+    console.log(frase.match(regex));
+    console.log(frase.match(regex2));
 
     /*
     Crie uma expressão regular que faça o match com a abertura de uma tag
@@ -74,8 +78,8 @@
     ["<div>", "<section>", "<blockquote>"]
     */
     console.log('\nMatch com a abertura de uma tag HTML:');
-    // ?
-
+    var regexTag = /<\w+>/g;
+    console.log('<div><section><blockquote>Texto <img /></blockquote></section></div>'.match(regexTag));
     /*
     Crie uma expressão regular que faça o match com uma tag HTML vazia, casando
     com a abertura e fechamento da tag.
@@ -86,8 +90,8 @@
     ["<li></li>", "<li></li>", "<span></span>"]
     */
     console.log('\nMatch com tags HTML vazias (abertura e fechamento da tag):');
-    // ?
-
+    var regexTagEmpty = /<\w+><\/\w+>/g;
+    console.log('<div><ul><li></li><li></li><li><span></span></li></ul></div>'.match(regexTagEmpty));
     /*
     Vamos complicar um pouco agora :D
     
@@ -111,5 +115,14 @@
     corretas, para depois aplicar no código ;)
     */
     console.log('\nFazer replace dos textos das tags:');
-    // ?
+    var regexTagText = /<(\w+)>(.+)<([\/]\1)>/g;
+    var textToReplace = '<h1>Título da página</h1><p>Este é um parágrafo</p><footer>Rodapé</footer>';
+    console.log(textToReplace.match(regexTagText));
+    var replacedText = textToReplace.replace(regexTagText, function (regex, tagInit, tagContent, tagEnd) {
+        return '<' + tagInit + '>O texto dentro da tag "' + tagInit + '" é "' + tagContent + '"<' + tagEnd + '>\n';
+    });
+
+    console.log(replacedText);
+
+    document.body.innerHTML = replacedText;
 })()
