@@ -17,7 +17,7 @@
     Com a resposta, mostre um alert com a mensagem "Bem vindo [USERNAME]!"
     */
     var username = prompt('QUal o seu nome?') || 'Desconhecido';
-    alert('Bem vindo ' + username);
+    alert('Bem vindo ' + username + '!');
 
     /*
     Agora, pergunte ao usuário "Qual o seu e-mail?", atribuindo o resultado à
@@ -29,13 +29,13 @@
     - Selecione o input de "Nome", atribuindo-o à uma variável chamada
     `$inputUsername`.
     */
-    var $inputUsername = doc.querySelector('[type=text]');
+    var $inputUsername = doc.querySelector('input[type=text]');
 
     /*
     - Selecione o input de "Email", atribuindo-o à uma variável chamada
     `$inputEmail`.
     */
-    var $inputEmail = doc.querySelector('[type=email]');
+    var $inputEmail = doc.querySelector('input[type=email]');
 
     /*
     - Selecione o campo de "Mensagem", atribuindo-o à uma variável chamada
@@ -81,27 +81,34 @@
         - "Não enviado."
     */
     $button.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (!validateFields())
+            return;
+
+        var canSend = confirm('Tem certeza que deseja enviar o formulário?');
+        var message = canSend ? "Enviado com sucesso" : "Não enviado";
+        alert(message);
+
+    }, false);
+
+    function validateFields() {
         var messages = [];
         if (!$inputUsername.value) {
             messages.push('Preencha o nome do usuário!');
         }
         if (!$inputEmail.value) {
             messages.push('Preencha o e-mail!');
+            if (!isEmailValid($inputEmail.value)) {
+                messages.push('Entre com um e-mail válido!');
+            }
         }
         if (!$message.value) {
             messages.push('Preencha a mensagem!');
         }
-        if (!isEmailValid($inputEmail.value)) {
-            messages.push('Entre com um e-mail válido!');
-        }
         if (messages.length) {
-
-        } else {
-
+            messages.forEach(alert);
+            return false;
         }
-    }, false);
-
-    function isEmailValid(email) {
         return true;
     }
 
@@ -131,6 +138,10 @@
         - "rita-marica@titica.a.b"
         - "agua_@evida.br.com"
     */
-    // ?
+    function isEmailValid(email) {
+        var regexValidEmail = /^([^\s][\w-+.]+)+@([a-zA-Z0-9_]{2,})(?:(\.)([a-zA-Z0-9_]{2,}))?(?:(\.)([a-zA-Z0-9_]{0,2}))?$/;
+        var regexValidEmail =  /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/; // resposta do professor
+        return regexValidEmail.test(email);
+    }
 
 })(window, document)
