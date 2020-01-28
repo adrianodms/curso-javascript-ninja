@@ -7,43 +7,74 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    /* [type="button"] {
+    *{
+      box-sizing: border-box;
+    }
+
+    [type="button"] {
       width: 40px;
       height: 40px;
-      margin: 5px;
+      margin: 4px;
     }
 
     [type="text"] {
       height: 40px;
       text-align: right;
       padding: 0 10px;
-    } */
+      width: 100%;
+    }
+
+    .calculator{
+      background:#fcfcfc;
+      padding: 10px;
+      border-radius: 5px;
+      width: 215px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .number-inputs {
+      width: calc(100% - 50px);
+      display: flex;
+      flex-wrap: wrap;
+      background: #f1f1f1;
+    }
+    .input-operations{
+      display: flex;
+      flex-wrap: wrap;
+      background: #dedede;
+      width: 50px;
+    }
   </style>
 </head>
 
 <body>
-  <input type="text" data-js="display" value="0" disabled>
-  <div>
-    <input data-js="number" type="button" value="1">
-    <input data-js="number" type="button" value="2">
-    <input data-js="number" type="button" value="3">
-    <input data-js="number" type="button" value="4">
-    <input data-js="number" type="button" value="5">
-    <input data-js="number" type="button" value="6">
-    <input data-js="number" type="button" value="7">
-    <input data-js="number" type="button" value="8">
-    <input data-js="number" type="button" value="9">
-    <input data-js="number" type="button" value="0">
-  </div>
-  <div>
-    <input data-js="operation" type="button" value="+">
-    <input data-js="operation" type="button" value="-">
-    <input data-js="operation" type="button" value="x">
-    <input data-js="operation" type="button" value="÷">
-  </div>
-  <div>
-    <input data-js="equal" type="button" value="=">
-    <input data-js="clear" type="button" value="CE">
+  <div class="calculator">
+    <input type="text" data-js="display" value="0" disabled>
+    <div class="number-inputs">
+      <input data-js="number" type="button" value="1">
+      <input data-js="number" type="button" value="2">
+      <input data-js="number" type="button" value="3">
+      <input data-js="number" type="button" value="4">
+      <input data-js="number" type="button" value="5">
+      <input data-js="number" type="button" value="6">
+      <input data-js="number" type="button" value="7">
+      <input data-js="number" type="button" value="8">
+      <input data-js="number" type="button" value="9">
+      <input data-js="number" type="button" value="0">
+      <input data-js="number" type="button" value=".">
+    </div>
+    <div class="input-operations">
+      <input data-js="operation" type="button" value="+">
+      <input data-js="operation" type="button" value="-">
+      <input data-js="operation" type="button" value="x">
+      <input data-js="operation" type="button" value="÷">
+    </div>
+    <div>
+      <input data-js="equal" type="button" value="=">
+      <input data-js="clear" type="button" value="CE">
+    </div>
   </div>
 
   <script src="challenge-23.js"></script>

@@ -35,19 +35,20 @@
   initButtons();
 
   function Calculator() {
+    var self = this;
     function sum(a, b) {
-      return a + b;
+      return Number(a) + Number(b);
     };
     function substraction(a, b) {
-      return a - b;
+      return Number(a) - Number(b);
     };
     function division(a, b) {
-      return a / b;
+      return Number(a) / Number(b);
     };
     function multiplication(a, b) {
-      return a * b;
+      return Number(a) * Number(b);
     };
-    function operation(operator) {
+    self.getOperation = function (operator) {
       switch (operator) {
         case '+':
           return sum;
@@ -64,56 +65,63 @@
       }
     }
     this.executeOperation = function (strOperation) {
-      var priorityOperationsRegex = /(\d+[*x\/÷]\d+){1,}/g;
-      var operationsPartsRegex = /^(\d+)([\+\-\*x\/÷])(\d+)$/g;
+      var priorityOperationsRegex = /([\d\.]+)([*x\/÷])([\d\.]+)/;
+      var secondaryOperationsRegex = /([\d\.]+)([\+\-])([\d\.]+)/;
+      strOperation = reduceOperations(strOperation, priorityOperationsRegex);
+      strOperation = reduceOperations(strOperation, secondaryOperationsRegex);
+      return strOperation;
+    }
 
-      // var priorityOperations = priorityOperationsRegex.exec(strOperation);
-      // var result = 0;
-      // while (priorityOperations.length) {
-      //   priorityOperations.forEach(function (item) {
-      //     var operationItems = item.match(operationsPartsRegex);
-      //     var operation = this.operation(operationItems[1])
-      //     result += operation.apply(operation, [operationItems[0], operationItems[2]]);
-      //   });
-      //   priorityOperations.pop();
-      // }
-
-      var operations = strOperation.match(/(\d+[\+\-\*x\/÷]\d+)/g);
+    function reduceOperations(operation, regex) {
+      var nextOperation = regex.exec(operation);
+      while (nextOperation) {
+        var result = self.getOperation(nextOperation[2])(nextOperation[1], nextOperation[3]);
+        operation = operation.replace(nextOperation[0], result);
+        nextOperation = regex.exec(operation);
+      }
+      return operation;
     }
   }
 
-
   function initButtons() {
     $numberButtons.forEach(function ($button) {
-      $button.addEventListener('click', function () {
-        if ($display.value == '0') {
-          $display.value = '';
-        }
-        $display.value += $button.value;
-      });
+      $button.addEventListener('click', numbersButtonsClickHandler);
     });
 
     $operationButtons.forEach(function ($button) {
-      $button.addEventListener('click', function () {
-        var value = $display.value;
-        var operationsInTheEndRegex = /(.+)[\+\-\*x\/÷]$/;
-        if (value.match(operationsInTheEndRegex)) {
-          value = value.replace(operationsInTheEndRegex, '$1' + $button.value);
-        } else {
-          value += $button.value;
-        }
-        $display.value = value;
-      });
+      $button.addEventListener('click', operationsButtonsClickHandler);
     });
 
-    $clearButton.addEventListener('click', function () {
-      $display.value = 0;
-    });
+    $clearButton.addEventListener('click', clearButtonClickHandler);
 
-
-    $equalButton.addEventListener('click', function () {
-      var calculator = new Calculator();
-      calculator.executeOperation($display.value);
-    });
+    $equalButton.addEventListener('click', equalButtonClickHandler);
   }
+
+  function numbersButtonsClickHandler() {
+    if ($display.value == '0') {
+      $display.value = '';
+    }
+    $display.value += this.value;
+  }
+
+  function operationsButtonsClickHandler() {
+    var value = $display.value;
+    var operationsInTheEndRegex = /(.+)[\+\-\*x\/÷]$/;
+    if (value.match(operationsInTheEndRegex)) {
+      value = value.replace(operationsInTheEndRegex, '$1' + this.value);
+    } else {
+      value += this.value;
+    }
+    $display.value = value;
+  }
+
+  function clearButtonClickHandler() {
+    $display.value = 0;
+  }
+
+  function equalButtonClickHandler() {
+    var calculator = new Calculator();
+    $display.value = calculator.executeOperation($display.value);
+  }
+
 })(window, document);
