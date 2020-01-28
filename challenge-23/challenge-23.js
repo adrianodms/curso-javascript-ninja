@@ -36,30 +36,18 @@
 
   function Calculator() {
     var self = this;
-    function sum(a, b) {
-      return Number(a) + Number(b);
-    };
-    function substraction(a, b) {
-      return Number(a) - Number(b);
-    };
-    function division(a, b) {
-      return Number(a) / Number(b);
-    };
-    function multiplication(a, b) {
-      return Number(a) * Number(b);
-    };
-    self.getOperation = function (operator) {
+    self.operation = function (operator, a, b) {
       switch (operator) {
         case '+':
-          return sum;
+          return Number(a) + Number(b);
         case '-':
-          return substraction;
+          return Number(a) - Number(b);
         case 'x':
         case '*':
-          return multiplication;
+          return Number(a) * Number(b);
         case '/':
         case '÷':
-          return division;
+          return Number(a) * Number(b);
         default:
           throw new Error('Operação inexistente');
       }
@@ -75,7 +63,7 @@
     function reduceOperations(operation, regex) {
       var nextOperation = regex.exec(operation);
       while (nextOperation) {
-        var result = self.getOperation(nextOperation[2])(nextOperation[1], nextOperation[3]);
+        var result = self.operation(nextOperation[2], nextOperation[1], nextOperation[3]);
         operation = operation.replace(nextOperation[0], result);
         nextOperation = regex.exec(operation);
       }
