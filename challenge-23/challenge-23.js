@@ -34,41 +34,41 @@
   var $clearButton = doc.querySelector('[data-js="clear"]');
   initButtons();
 
-  function Calculator() {
-    var self = this;
-    self.operation = function (operator, a, b) {
-      switch (operator) {
-        case '+':
-          return Number(a) + Number(b);
-        case '-':
-          return Number(a) - Number(b);
-        case 'x':
-        case '*':
-          return Number(a) * Number(b);
-        case '/':
-        case '÷':
-          return Number(a) * Number(b);
-        default:
-          throw new Error('Operação inexistente');
-      }
-    }
-    this.executeOperation = function (strOperation) {
-      var priorityOperationsRegex = /([\d\.]+)([*x\/÷])([\d\.]+)/;
-      var secondaryOperationsRegex = /([\d\.]+)([\+\-])([\d\.]+)/;
-      strOperation = reduceOperations(strOperation, priorityOperationsRegex);
-      strOperation = reduceOperations(strOperation, secondaryOperationsRegex);
-      return strOperation;
-    }
+  function Calculator() { }
 
-    function reduceOperations(operation, regex) {
-      var nextOperation = regex.exec(operation);
-      while (nextOperation) {
-        var result = self.operation(nextOperation[2], nextOperation[1], nextOperation[3]);
-        operation = operation.replace(nextOperation[0], result);
-        nextOperation = regex.exec(operation);
-      }
-      return operation;
+  Calculator.prototype.getOperation = function (operator, a, b) {
+    switch (operator) {
+      case '+':
+        return Number(a) + Number(b);
+      case '-':
+        return Number(a) - Number(b);
+      case 'x':
+      case '*':
+        return Number(a) * Number(b);
+      case '/':
+      case '÷':
+        return Number(a) / Number(b);
+      default:
+        throw new Error('Operação inexistente');
     }
+  }
+
+  Calculator.prototype.executeOperation = function (strOperation) {
+    var priorityOperationsRegex = /([\d\.]+)([*x\/÷])([\d\.]+)/;
+    var secondaryOperationsRegex = /([\d\.]+)([\+\-])([\d\.]+)/;
+    strOperation = this.reduceOperations(strOperation, priorityOperationsRegex);
+    strOperation = this.reduceOperations(strOperation, secondaryOperationsRegex);
+    return strOperation;
+  }
+
+  Calculator.prototype.reduceOperations = function (operation, regex) {
+    var nextOperation = regex.exec(operation);
+    while (nextOperation) {
+      var result = this.getOperation(nextOperation[2], nextOperation[1], nextOperation[3]);
+      operation = operation.replace(nextOperation[0], result);
+      nextOperation = regex.exec(operation);
+    }
+    return operation;
   }
 
   function initButtons() {
@@ -82,7 +82,9 @@
 
     $clearButton.addEventListener('click', clearButtonClickHandler);
 
-    $equalButton.addEventListener('click', equalButtonClickHandler);
+    $equalButton.addEventListener('click', function () {
+      equalButtonClickHandler(new Calculator());
+    });
   }
 
   function numbersButtonsClickHandler() {
@@ -107,8 +109,7 @@
     $display.value = 0;
   }
 
-  function equalButtonClickHandler() {
-    var calculator = new Calculator();
+  function equalButtonClickHandler(calculator) {
     $display.value = calculator.executeOperation($display.value);
   }
 
