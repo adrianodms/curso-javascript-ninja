@@ -72,11 +72,11 @@
   }
 
   function initButtons() {
-    $numberButtons.forEach(function ($button) {
+    Array.prototype.forEach.call($numberButtons, function ($button) {
       $button.addEventListener('click', numbersButtonsClickHandler);
     });
 
-    $operationButtons.forEach(function ($button) {
+    Array.prototype.forEach.call($operationButtons, function ($button) {
       $button.addEventListener('click', operationsButtonsClickHandler);
     });
 
