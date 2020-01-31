@@ -1,4 +1,4 @@
-(function (win, doc) {
+(function () {
 
   /*
   O desafio dessa semana é criar uma mini library (biblioteca) para
@@ -24,7 +24,7 @@
   // ?
 
   function DOM(selector) {
-    this.$elements = doc.querySelectorAll(selector);
+    this.$elements = document.querySelectorAll(selector);
   }
 
   DOM.prototype.get = function () {
@@ -37,20 +37,23 @@
     });
   }
 
-  DOM.prototype.off = function () {
+  DOM.prototype.off = function (evt, callback) {
     Array.prototype.forEach.call(this.$elements, function ($element) {
-      $element.removeEventListener(evt, callback);
+      $element.removeEventListener(evt, callback, false);
     });
   }
 
 
   var $a = new DOM('[data-js="link"]');
-  $a.on('click', function (e) {
+  $a.on('click', clickHandler);
+
+  function clickHandler(e) {
     e.preventDefault();
     console.log('clicou');
-  });
+    $a.off('click', clickHandler);
+  }
 
   console.log('Elementos selecionados:', $a.get());
   console.log('$a é filho de body?', $a.get()[0].parentNode === document.body);
 
-})(window, document);
+})();
