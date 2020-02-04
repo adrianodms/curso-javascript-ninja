@@ -1,4 +1,4 @@
-(function() {
+(function ($) {
   'use strict';
 
   /*
@@ -36,4 +36,76 @@
   que será nomeado de "app".
   */
 
-})();
+  function Car(img, brand, year, plate, color) {
+    this.img = img;
+    this.brand = brand;
+    this.year = year;
+    this.plate = plate;
+    this.color = color;
+  }
+
+  function app() {
+    function init() {
+      getCompanyInfos(handleCompanyInfos);
+      submitForm();
+    }
+
+    function handleCompanyInfos(companyInfos) {
+      $('[data-js="empresa-nome"]').get()[0].textContent = companyInfos.name;
+      $('[data-js=empresa-telefone]').get()[0].textContent = companyInfos.phone;
+    }
+
+    function getCompanyInfos(callback, error) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/company.json');
+      xhr.send();
+      xhr.addEventListener('readystatechange', function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          if (callback) {
+            callback(JSON.parse(xhr.responseText));
+          }
+        }
+      });
+    }
+
+    function submitForm() {
+      var $form = ($('[data-js="car-form"]')).get()[0];
+      $form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var carImg = $('[data-js=car-img]').get()[0].value;
+        var carBrand = $('[data-js=car-brand]').get()[0].value;
+        var carYear = $('[data-js=car-year]').get()[0].value;
+        var carPlate = $('[data-js=car-plate]').get()[0].value;
+        var carColor = $('[data-js=car-color]').get()[0].value;
+
+        fillTable(new Car(carImg, carBrand, carYear, carPlate, carColor));
+
+      });
+    }
+
+    function fillTable(car) {
+      var docFragment = document.createDocumentFragment();
+      var tr = document.createElement('tr');
+
+      for (var data in car) {
+        var td = document.createElement('td');
+        td.innerText = car[data];
+        tr.appendChild(td)
+      }
+      docFragment.appendChild(tr);
+
+      $('[data-js=table-content]').get()[0].appendChild(tr);
+    }
+
+    init();
+
+    return {
+      init: init,
+      getCompanyInfos: getCompanyInfos,
+      handleCompanyInfos: handleCompanyInfos
+    }
+  }
+
+  window.app = app;
+  app();
+})(window.DOM);

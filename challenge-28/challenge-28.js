@@ -1,4 +1,5 @@
 (function (DOM) {
+  'use strict';
 
   /*
   No HTML:
@@ -39,33 +40,36 @@
 
   var ajaxStatus = (new DOM('[data-js=ajax-status]')).get()[0];
 
-  submitBtn.on('click', function () {
-    fillAddress('', '', '', '', '');
+  submitBtn.on('click', handleSubmitBtnClick);
+
+  function handleSubmitBtnClick() {
+    fillAddress('-', '-', '-', '-', '-');
 
     var cep = CEPinput.value.replace(/\D/g, '');
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://viacep.com.br/ws/' + cep + '/json/');
     xhr.send();
     xhr.addEventListener('readystatechange', function () {
-      if (this.readyState == 1 || this.readyState == 2 || this.readyState == 3) {
-        ajaxStatus.innerText = 'Buscando informações para o CEP ' + cep + '...';
-      }
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          var response = JSON.parse(xhr.responseText);
-
-          fillAddress(response.logradouro, response.bairro, response.uf, response.localidade, response.cep);
-
-          ajaxStatus.innerText = 'Endereço referente ao CEP: ' + cep;
-
-        } else {
-          ajaxStatus.innerText = 'Não encontramos o endereço para o CEP ' + cep + '.';
-        }
-
-      }
+      handleCEPxhrReadyStateChange(xhr, cep);
     });
 
-  });
+  }
+
+  function handleCEPxhrReadyStateChange(xhr, cep) {
+    if (xhr.readyState == 1 || xhr.readyState == 2 || xhr.readyState == 3) {
+      showMessage('loading', cep);
+    }
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        fillAddress(response.logradouro, response.bairro, response.uf, response.localidade, response.cep);
+        showMessage('ok', cep);
+
+      } else {
+        showMessage('error', cep);
+      }
+    }
+  }
 
   function fillAddress(logradouro, bairro, uf, localidade, cep) {
     logradouroSpan.innerText = logradouro;
@@ -73,6 +77,15 @@
     estadoSpan.innerText = uf;
     cidadeSpan.innerText = localidade;
     cepSpan.innerText = cep;
+  }
+
+  function showMessage(type, cep) {
+    var messages = {
+      ok: 'Endereço referente ao CEP: ' + cep,
+      loading: 'Buscando informações para o CEP ' + cep + '...',
+      error: 'Não encontramos o endereço para o CEP ' + cep + '.'
+    }
+    ajaxStatus.innerText = messages[type];
   }
 
 })(window.DOM);

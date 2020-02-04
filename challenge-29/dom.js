@@ -1,6 +1,8 @@
 (function () {
   'use strict';
   function DOM(selector) {
+    if (!(this instanceof DOM))
+      return new DOM(selector);
     this.$elements = document.querySelectorAll(selector);
   }
 
